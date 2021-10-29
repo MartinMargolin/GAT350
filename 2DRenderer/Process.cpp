@@ -143,12 +143,44 @@ void Process::Invert(const ColorBuffer& colorBuffer)
 
 void Process::ColorBalance(const ColorBuffer& colorBuffer, int16_t ro, int16_t go, int16_t bo)
 {
+	for (int i = 0; i < colorBuffer.width * colorBuffer.height; i++)
+	{
+		color_t& color = ((color_t*)colorBuffer.data)[i];
+			
+		int16_t r = color.r + ro;
+		int16_t g = color.r + go;
+		int16_t b = color.r + bo;
+
+		color.r = ((r < 0) ? 0 : (r > 255) ? 255 : r);
+		color.g = ((g < 0) ? 0 : (g > 255) ? 255 : g);
+		color.b = ((b < 0) ? 0 : (b > 255) ? 255 : b);
+
+	}
+
 
 }
 
-void Process::Brightness(const ColorBuffer& colorBuffer)
+void Process::Brightness(const ColorBuffer& colorBuffer, int16_t brightness)
 {
+
+	for (int i = 0; i < colorBuffer.width * colorBuffer.height; i++)
+	{
+		color_t& color = ((color_t*)colorBuffer.data)[i];
+
+		int16_t r = color.r + brightness;
+		int16_t g = color.g + brightness;
+		int16_t b = color.b + brightness;
+
+		color.r = ((r < 0) ? 0 : (r > 255) ? 255 : r);
+		color.g = ((g < 0) ? 0 : (g > 255) ? 255 : g);
+		color.b = ((b < 0) ? 0 : (b > 255) ? 255 : b);
+		
+
+
+	}
+
 }
+
 
 void Process::Noise(const ColorBuffer& colorBuffer, uint8_t noise)
 {
@@ -169,9 +201,22 @@ void Process::Noise(const ColorBuffer& colorBuffer, uint8_t noise)
 	}
 }
 
-void Process::Threshold(const ColorBuffer& colorBuffer)
+void Process::Threshold(const ColorBuffer& colorBuffer, uint8_t threshold)
 {
+
+	for (int i = 0; i < colorBuffer.width * colorBuffer.height; i++)
+	{
+		color_t& color = ((color_t*)colorBuffer.data)[i];	
+		
+		color.r = (color.r >= threshold) ? color.r : 0;
+		color.g = (color.g >= threshold) ? color.g : 0;
+		color.b = (color.b >= threshold) ? color.b : 0;
+
+	}
+
 }
+
+
 
 
 

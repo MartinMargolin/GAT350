@@ -63,28 +63,64 @@ int main(int, char**)
         //        30, { 0, 255, 255, 255 });
         //}
 
+
+        // Renderer 
+
         std::unique_ptr<Image> image = std::make_unique<Image>();
         image->Load("../Resources/flower.bmp");
         image->Flip();
+        framebuffer->DrawImage(0, 0, image.get());
 
-        framebuffer->DrawImage(300, 30, image.get());
-       
         std::unique_ptr<Image> image1 = std::make_unique<Image>(*image.get());
-        Process::BoxBlur(image1->colorBuffer);
-        framebuffer->DrawImage(0, 300, image1.get());
+        Process::Invert(image1->colorBuffer);
+        framebuffer->DrawImage(200, 0, image1.get());
 
         std::unique_ptr<Image> image2 = std::make_unique<Image>(*image.get());
-        Process::GaussianBlur(image2->colorBuffer);
-        framebuffer->DrawImage(200, 300, image2.get());
+        Process::Monochrome(image2->colorBuffer);
+        framebuffer->DrawImage(400, 0, image2.get());
 
         std::unique_ptr<Image> image3 = std::make_unique<Image>(*image.get());
-        Process::Sharpen(image3->colorBuffer);
-        framebuffer->DrawImage(400, 300, image3.get());
+        Process::Noise(image3->colorBuffer, 100);
+        framebuffer->DrawImage(600, 0, image3.get());
 
         std::unique_ptr<Image> image4 = std::make_unique<Image>(*image.get());
-        Process::Monochrome(image4->colorBuffer);
-        Process::Edge(image4->colorBuffer, 0);
-        framebuffer->DrawImage(600, 300, image4.get());
+        Process::Brightness(image4->colorBuffer, -100);
+        framebuffer->DrawImage(0, 200, image4.get());
+
+        std::unique_ptr<Image> image5 = std::make_unique<Image>(*image.get());
+        Process::ColorBalance(image5->colorBuffer, 0, 0, 100);
+        framebuffer->DrawImage(200, 200, image5.get());
+
+        std::unique_ptr<Image> image6 = std::make_unique<Image>(*image.get());
+        Process::Threshold(image6->colorBuffer, 200);
+        framebuffer->DrawImage(400, 200, image6.get());
+
+
+
+        //Render Advanced
+
+        //std::unique_ptr<Image> image = std::make_unique<Image>();
+        //image->Load("../Resources/flower.bmp");
+        //image->Flip();
+
+        //framebuffer->DrawImage(300, 30, image.get());
+       
+        //std::unique_ptr<Image> image1 = std::make_unique<Image>(*image.get());
+        //Process::BoxBlur(image1->colorBuffer);
+        //framebuffer->DrawImage(0, 300, image1.get());
+
+        //std::unique_ptr<Image> image2 = std::make_unique<Image>(*image.get());
+        //Process::GaussianBlur(image2->colorBuffer);
+        //framebuffer->DrawImage(200, 300, image2.get());
+
+        //std::unique_ptr<Image> image3 = std::make_unique<Image>(*image.get());
+        //Process::Sharpen(image3->colorBuffer);
+        //framebuffer->DrawImage(400, 300, image3.get());
+
+        //std::unique_ptr<Image> image4 = std::make_unique<Image>(*image.get());
+        //Process::Monochrome(image4->colorBuffer);
+        //Process::Edge(image4->colorBuffer, 0);
+        //framebuffer->DrawImage(600, 300, image4.get());
 
         framebuffer->Update();
 

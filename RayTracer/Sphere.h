@@ -7,7 +7,8 @@ class Sphere : public Geometry
 {
 public:
     Sphere() = default;
-    Sphere(const glm::vec3& center, float radius) :
+    Sphere(const glm::vec3& center, float radius, std::shared_ptr<Material> material) :
+        Geometry{ material },
         center(center),
         radius(radius) {}
 

@@ -29,6 +29,7 @@ bool Sphere::Hit(const ray_t& ray, float tMin, float tMax, raycastHit_t& hit)
             hit.t = t;
             hit.point = ray.pointAt(hit.t);
             hit.normal = (hit.point - center) / radius;
+            hit.material = material.get();
             return true;
         }
 
@@ -40,6 +41,7 @@ bool Sphere::Hit(const ray_t& ray, float tMin, float tMax, raycastHit_t& hit)
             hit.t = t;
             hit.point = ray.pointAt(hit.t);
             hit.normal = (hit.point - center) / radius;
+            hit.material = material.get();
             return true;
         }
     }
