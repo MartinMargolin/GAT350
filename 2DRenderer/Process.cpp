@@ -127,6 +127,54 @@ void Process::Monochrome(const ColorBuffer& colorBuffer)
 	}
 }
 
+void Process::Invert(const ColorBuffer& colorBuffer)
+{
+	for (int i = 0; i < colorBuffer.width* colorBuffer.height; i++)
+	{
+		color_t& color = ((color_t*)colorBuffer.data)[i];
+
+		color.r = 255 - color.r;
+		color.g = 255 - color.g;
+		color.b = 255 - color.b;
+
+	}
+
+}
+
+void Process::ColorBalance(const ColorBuffer& colorBuffer, int16_t ro, int16_t go, int16_t bo)
+{
+
+}
+
+void Process::Brightness(const ColorBuffer& colorBuffer)
+{
+}
+
+void Process::Noise(const ColorBuffer& colorBuffer, uint8_t noise)
+{
+
+	for (int i = 0; i < colorBuffer.width * colorBuffer.height; i++)
+	{
+		color_t& color = ((color_t*)colorBuffer.data)[i];
+
+		int16_t offset = (rand() % ((noise << 1) + 1)) - noise;
+		int16_t r = color.r + offset;
+		int16_t g = color.g + offset;
+		int16_t b = color.b + offset;
+
+		color.r = ((r < 0) ? 0 : (r > 255) ? 255 : r);
+		color.g = ((g < 0) ? 0 : (g > 255) ? 255 : g);
+		color.b = ((b < 0) ? 0 : (b > 255) ? 255 : b);
+
+	}
+}
+
+void Process::Threshold(const ColorBuffer& colorBuffer)
+{
+}
+
+
+
 void Process::Edge(const ColorBuffer& colorBuffer, uint8_t threshold)
 {
 	ColorBuffer source = colorBuffer;
