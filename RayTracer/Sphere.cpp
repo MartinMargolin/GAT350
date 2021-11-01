@@ -7,18 +7,12 @@ bool Sphere::Hit(const ray_t& ray, float tMin, float tMax, raycastHit_t& hit)
     float b = 2 * glm::dot(ray.direction, oc);
     float c = glm::dot(oc, oc) - (radius * radius);
 
-
-
     // c = distance from ray origin to sphere > radius
     // b = ray direction is facing away from sphere
     if (c > 0 && b > 0) return false;
 
-
-
     // b^2 - 4ac
     float discriminant = (b * b) - (4 * a * c);
-
-
 
     // discriminant == 0 - one intersection, discriminant > 0 - two intersections
     if (discriminant >= 0)
@@ -32,8 +26,6 @@ bool Sphere::Hit(const ray_t& ray, float tMin, float tMax, raycastHit_t& hit)
             hit.material = material.get();
             return true;
         }
-
-
 
         t = (-b + sqrt(discriminant)) / (2 * a);
         if (t > tMin && t < tMax)

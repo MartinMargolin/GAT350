@@ -7,8 +7,8 @@
 class Geometry
 {
 public:
-    Geometry() = default;
     Geometry(std::shared_ptr<Material> material) : material{ material } {}
+    Geometry() = default;
     virtual ~Geometry() = default;
 
    
